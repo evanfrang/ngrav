@@ -1,5 +1,6 @@
 import numpy as np
 from ngrav.integrators import RK4Integrator
+from ngrav.collision_detection import collision_detect
 
 class System:
 
@@ -7,14 +8,6 @@ class System:
         self.bodies = bodies
         self.time = 0.0
         self.integrator = RK4Integrator(self)
-
-    """def compute_accel(self):
-        positions = np.array([b.position for b in self.bodies])
-        masses = np.array([b.mass for b in self.bodies])
-
-        accels = self.Forces.compute_vec_accel(positions, masses)
-        for body, a in zip(self.bodies, accels):
-            body.acceleration = a"""
         
     def masses(self):
         return np.array([b.mass for b in self.bodies])
@@ -27,4 +20,6 @@ class System:
     def run(self, sim_time, dt):
         steps = int(sim_time / dt)
         for _ in steps:
+            #check collision
+            collision_detect(self.bodies, dt)
             self.step(dt)
