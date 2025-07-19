@@ -22,11 +22,11 @@ def main():
     dt = config["sim_params"]["dt"]
     plot_config = config["plot_params"]
     plot_params = [plot_config["names"], plot_config["colors"], \
-                plot_config["radii"], plot_config["trails"]]
+                plot_config["radii"], plot_config["linewidth"]]
     filename = "results/" + config["filename"]
 
     bodies = [
-        Body(mass=mass_config[i], position=position_config[i], \
+        Body(id = i, mass=mass_config[i], position=position_config[i], \
             velocity=velocity_config[i]) for i in range(len(mass_config))
     ]
 
@@ -34,21 +34,10 @@ def main():
     system = System(bodies)
     forces = Gravity(G=G_param)
     integrator = RK4Integrator(forces.compute)
+    system.integrator = integrator
+    system.run(T, dt)
 
-    # Initial state
-    state = system.initial_state()
-    masses = system.masses()
-    steps = int(T / dt)
-
-    # Storage for visualization
-    trajectory = [state['positions'].copy()]
-
-    # Time loop
-    for step in range(steps):
-        state = integrator.step(state, masses, dt)
-        trajectory.append(state['positions'].copy())
-
-    trajectory = np.array(trajectory)  # shape (steps+1, N, 2)
+    trajectory = system.get_trajectories()
 
     simple_plot(trajectory, plot_params, filename)
 

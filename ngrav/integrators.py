@@ -16,5 +16,5 @@ class RK4Integrator:
         x_new = x + dt/6.0 * (k1_v + 2*k2_v + 2*k3_v + k4_v)
         v_new = v + dt/6.0 * (k1_a + 2*k2_a + 2*k3_a + k4_a)
 
-        return {'positions': x_new, 'velocities': v_new}
+        return {'positions': x_new, 'velocities': v_new}, k4_a
 

@@ -1,6 +1,6 @@
 {
     "bodies": {
-        "masses": [1.0, 0.001],
+        "masses": [10.0, 0.001],
         "positions": [[0.0, 0.0], [5.0, 0.0]],
         "velocities": [[0.0, 0.0], [0.0, 0.5]]
     },
@@ -11,9 +11,9 @@
 
     "plot_params": {
         "names": ["Sun", "Earth"],
-        "radii": [1.0, 0.5],
+        "radii": [0.1, 0.05],
         "colors": ["red", "blue"],
-        "trails": []
+        "linewidth": [0.1, 0.05]
     },
 
     "sim_params": {
