@@ -10,14 +10,18 @@ class System:
         self.time = 0.0
         self.integrator = RK4Integrator(self)
         self.trajectories = {body.id: [] for body in self.bodies}
+        self.velocity_log = {body.id: [] for body in self.bodies}
         self.a_thresh = 100.
         self.dist_thresh = 100.
         self.collision_tolerance = 0.01
         
     def _log_current_positions(self, state):
         positions = state['positions']
+        velocities = state['velocities']
         for i, pos in enumerate(positions):
+            vel = velocities[i]
             self.trajectories[self.bodies[i].id].append(pos.copy())
+            self.velocity_log[self.bodies[i].id].append(vel.copy())
 
     def masses(self):
         return np.array([b.mass for b in self.bodies])
@@ -44,4 +48,4 @@ class System:
             print(f"Simulation completed all {steps} steps.")
     
     def get_trajectories(self):
-        return self.trajectories
+        return self.trajectories, self.velocity_log
