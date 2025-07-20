@@ -3,7 +3,7 @@ from ngrav.forces import Gravity
 from ngrav.integrators import RK4Integrator
 import numpy as np
 from ngrav.body import Body
-from ngrav.plotter import simple_plot
+from ngrav.plotter import simple_plot, animate_plot
 import json
 
 
@@ -34,12 +34,17 @@ def main():
     system = System(bodies)
     forces = Gravity(G=G_param)
     integrator = RK4Integrator(forces.compute)
+    system.a_thresh = 1000.
+    system.dist_thresh = 30.
+    system.collision_tolerance = 0.01
     system.integrator = integrator
+    print("Starting Simulation ... ")
     system.run(T, dt)
 
     trajectory = system.get_trajectories()
 
     simple_plot(trajectory, plot_params, filename)
+    animate_plot(trajectory, plot_params, filename)
 
 if __name__ == "__main__":
     main()

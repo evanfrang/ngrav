@@ -5,4 +5,7 @@ def collision_detect(positions, tolerance):
     diff = positions[np.newaxis, :, :] - positions[:, np.newaxis, :]
     dists = np.linalg.norm(diff, axis=2)
     np.fill_diagonal(dists, np.inf)
-    return not np.all(dists >= tolerance)
+    if np.any(dists <= tolerance):
+        print(f"Collision detected at tolerance: {tolerance}")
+        return True
+    return False

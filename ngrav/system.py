@@ -10,6 +10,9 @@ class System:
         self.time = 0.0
         self.integrator = RK4Integrator(self)
         self.trajectories = {body.id: [] for body in self.bodies}
+        self.a_thresh = 100.
+        self.dist_thresh = 100.
+        self.collision_tolerance = 0.01
         
     def _log_current_positions(self, state):
         positions = state['positions']
@@ -30,11 +33,11 @@ class System:
         self._log_current_positions(state)
         for s in range(steps):
             state, accel = self.integrator.step(state, self.masses(), dt)
-            if collision_detect(state['positions'], tolerance=0.1):
-                break
-            if slingshot_detect(accel, a_thresh=1000.):
-                break
             self._log_current_positions(state)
+            if collision_detect(state['positions'], self.collision_tolerance):
+                break
+            if slingshot_detect(state, accel, self.a_thresh, self.dist_thresh):
+                break
         if s < steps - 1:
             print(f"Simulation ended early at step {s}.")
         else:
