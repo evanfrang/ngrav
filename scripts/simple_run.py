@@ -41,7 +41,7 @@ def main():
     print("Starting Simulation ... ")
     system.run(T, dt)
 
-    trajectory = system.get_trajectories()
+    trajectory, _ = system.get_trajectories()
 
     simple_plot(trajectory, plot_params, filename)
     animate_plot(trajectory, plot_params, filename)

@@ -19,7 +19,7 @@ def simple_plot(trajectory, plot_params, filename):
     colors = plot_params[1]
     radii = plot_params[2]
     linewidth = plot_params[3]
-    
+
     num_bodies = len(trajectory.keys())
 
     for i in range(num_bodies):
@@ -59,7 +59,7 @@ def ring_plot(trajectory, filename):
             plt.plot(traj_temp[:, 0], traj_temp[:, 1], color='k', \
                     markersize=0.5, linewidth=0.2)
     plt.xlim((-5*traj_temp[0,0], 5*traj_temp[0,0]))
-    plt.ylim((-5*traj_temp[0,1], 5*traj_temp[0,1]))
+    plt.ylim((-5*traj_temp[0,0], 5*traj_temp[0,0]))
     plt.gca().set_aspect('equal')
     plt.savefig(filename)
 
