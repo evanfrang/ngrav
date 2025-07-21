@@ -1,2 +1,28 @@
 # ngrav
-Gravity simulations
+Evan Frangipane
+
+## Introduction
+
+ngrav is a 2D gravity simulation. The goal is to make cool images and
+videos.
+
+## Calculation
+
+There is a regulator in the denominator of the force that prevents small
+radius divergence. The integrator is RK4 so we have some higher order
+terms in the recalculation of position and velocity.
+
+## Stopping Conditions
+
+There are two conditions that will stop the simulation early. There is
+collision detection and what I call slingshot detection when a body gets
+sent really fast or far away.
+
+Collision detection implementation is very simple with a vectorized
+check on all bodies. If the number of bodies is very great will have to
+implement a broad and narrow band kind of thing.
+
+## Animations
+
+Right now there is a very simple animation that can be created.
+Depending on the number of steps this can be pretty slow to create.
